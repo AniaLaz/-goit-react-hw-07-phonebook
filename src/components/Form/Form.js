@@ -1,24 +1,24 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { addContacts } from '../../redux/sliseContacts';
+// import { addContacts } from '../../redux/sliseContacts';
 import { nanoid } from 'nanoid';
 import css from 'components/Form/Form.module.css';
+import { addContact } from '../../redux/operations';
 
 const Form = () => {
   // Получаем ссылку на функцию отправки экшенов
   const dispatch = useDispatch();
 
-  const contacts = useSelector(state => state.contacts.contactsArr);
+  const contacts = useSelector(state => state.contacts.items);
 
   const handleSubmit = event => {
     event.preventDefault();
     
-    const name = event.target;
-    const number = event.target;
     const contact = {
-      name: name.elements.name.value,
-      number: number.elements.number.value,
-      id: nanoid()
+      name: event.target.name.value,
+      phone: event.target.phone.value,
+      id: nanoid(),
     };
+
     if (
       contacts.length > 0 &&
       contacts.find(item => item.name === contact.name)
@@ -28,7 +28,7 @@ const Form = () => {
       return;
     }
 
-      dispatch(addContacts(contact));
+      dispatch(addContact(contact));
     //очищаем поля ввода
     event.target.reset();
   };
@@ -48,7 +48,7 @@ const Form = () => {
         <span className={css.spanNamber}>Namber</span>
         <input
           type="tel"
-          name="number"
+          name="phone"
           pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
           title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
           required
