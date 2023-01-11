@@ -1,6 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
-// import { deleteContacts } from '../../redux/sliseContacts';
 import css from 'components/Contacts/Contacts.module.css';
 import { MdClose } from 'react-icons/md';
 import { fetchContacts } from '../../redux/operations';
