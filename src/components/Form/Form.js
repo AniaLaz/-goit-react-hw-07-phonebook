@@ -3,12 +3,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { nanoid } from 'nanoid';
 import css from 'components/Form/Form.module.css';
 import { addContact } from '../../redux/operations';
+import { getContacts } from '../../redux/selector';
 
 const Form = () => {
   // Получаем ссылку на функцию отправки экшенов
   const dispatch = useDispatch();
 
-  const contacts = useSelector(state => state.contacts.items);
+  const items = useSelector(getContacts);
 
   const handleSubmit = event => {
     event.preventDefault();
@@ -19,11 +20,9 @@ const Form = () => {
       id: nanoid(),
     };
 
-    if (
-      contacts.length > 0 &&
-      contacts.find(item => item.name === contact.name)
-    ) {
+    if (items.length > 0 && items.find(item => item.name === contact.name)) {
       alert('Такий контакт вже є');
+      //очищаем поля ввода
       event.target.reset();
       return;
     }
